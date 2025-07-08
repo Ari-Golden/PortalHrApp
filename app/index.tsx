@@ -1,48 +1,70 @@
+import CardIcon from "@/components/CardIcon";
+import ScheduleItem from "@/components/ScheduleItem";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
+  const colorScheme = useColorScheme();
+  const themeColors = Colors[colorScheme ?? "light"];
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: themeColors.background }]}
+    >
       {/* Kehadiran dan Kepulangan */}
-      <View style={styles.attendanceBox}>
+      <View
+        style={[styles.attendanceBox, { backgroundColor: themeColors.tint }]}
+      >
         <Ionicons
           name="time-outline"
           size={24}
-          color="#fff"
+          color={themeColors.text}
           style={{ marginRight: 10 }}
         />
         <View style={styles.attendanceRow}>
-          <Text style={styles.attendanceText}>Check In: 08:00</Text>
-          <Text style={styles.attendanceText}> | </Text>
-          <Text style={styles.attendanceText}>Check Out: 17:00</Text>
+          <Text style={[styles.attendanceText, { color: themeColors.text }]}>
+            Check In: 08:00
+          </Text>
+          <Text style={[styles.attendanceText, { color: themeColors.text }]}>
+            {" "}
+            |{" "}
+          </Text>
+          <Text style={[styles.attendanceText, { color: themeColors.text }]}>
+            Check Out: 17:00
+          </Text>
         </View>
       </View>
 
       {/* Icon Cards */}
       <View style={styles.content}>
-        <Text style={styles.sectionTitle}>Menu</Text>
+        <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
+          Menu
+        </Text>
         <View style={styles.cardRow}>
-          <CardIcon icon="calendar" label="Cuti" onPress={() => {}} />
-          <CardIcon icon="hourglass" label="Lembur" onPress={() => {}} />
-          <CardIcon icon="document-text" label="Slip Gaji" onPress={() => {}} />
-          <CardIcon icon="stats-chart" label="KPI" onPress={() => {}} />
-          <CardIcon icon="school" label="Training" onPress={() => {}} />
-          <CardIcon icon="briefcase" label="Job" onPress={() => {}} />
-          <CardIcon icon="cash-outline" label="Tax" onPress={() => {}} />
-          <CardIcon icon="people" label="Family" onPress={() => {}} />
+          <CardIcon icon="calendar" label="Cuti" href="/screens/leave" />
+          <CardIcon icon="hourglass" label="Lembur" href="/screens/overtime" />
+          <CardIcon
+            icon="document-text"
+            label="Slip Gaji"
+            href="/screens/payslip"
+          />
+          <CardIcon icon="stats-chart" label="KPI" href="/screens/kpi" />
+          <CardIcon icon="school" label="Training" href="/screens/training" />
+          <CardIcon icon="briefcase" label="Job" href="/screens/job" />
+          <CardIcon icon="cash-outline" label="Tax" href="/screens/tax" />
+          <CardIcon icon="people" label="Family" href="/screens/family" />
         </View>
 
         {/* Aktivitas Perusahaan */}
-        <View style={styles.scheduleBox}>
-          <Text style={styles.sectionTitle}>Aktivitas Perusahaan</Text>
+        <View
+          style={[styles.scheduleBox, { backgroundColor: themeColors.card }]}
+        >
+          <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
+            Aktivitas Perusahaan
+          </Text>
           <ScheduleItem
             icon="calendar-outline"
             title="Rapat Divisi Marketing"
@@ -64,59 +86,13 @@ export default function Index() {
   );
 }
 
-// Komponen CardIcon
-const CardIcon = ({
-  icon,
-  label,
-  onPress,
-}: {
-  icon: any;
-  label: string;
-  onPress: () => void;
-}) => (
-  <TouchableOpacity style={styles.card} onPress={onPress}>
-    <View style={styles.iconCircle}>
-      <Ionicons name={icon} size={26} color="#fff" />
-    </View>
-    <Text style={styles.cardLabel} numberOfLines={1}>
-      {label}
-    </Text>
-  </TouchableOpacity>
-);
-
-// Komponen ScheduleItem
-const ScheduleItem = ({
-  icon,
-  title,
-  date,
-}: {
-  icon: any;
-  title: string;
-  date: string;
-}) => (
-  <View style={styles.scheduleItem}>
-    <Ionicons
-      name={icon}
-      size={20}
-      color="#6b21a8"
-      style={{ marginRight: 10 }}
-    />
-    <View>
-      <Text style={styles.scheduleTitle}>{title}</Text>
-      <Text style={styles.scheduleDate}>{date}</Text>
-    </View>
-  </View>
-);
-
 // Style
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
     paddingTop: 50,
   },
   attendanceBox: {
-    backgroundColor: "#c2185b",
     marginHorizontal: 16,
     borderRadius: 12,
     padding: 16,
@@ -129,7 +105,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   attendanceText: {
-    color: "#fff",
     fontSize: 16,
     marginTop: 5,
   },
@@ -141,7 +116,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 12,
-    color: "#333",
   },
   cardRow: {
     flexDirection: "row",
@@ -149,7 +123,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   card: {
-    backgroundColor: "#f9a8d4",
     width: "22%",
     aspectRatio: 1,
     borderRadius: 16,
@@ -164,7 +137,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   iconCircle: {
-    backgroundColor: "#ec4899",
     padding: 12,
     borderRadius: 999,
     marginBottom: 6,
@@ -175,20 +147,16 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardLabel: {
-    color: "#333",
     fontWeight: "600",
     fontSize: 13,
     textAlign: "center",
   },
   scheduleBox: {
     marginTop: 24,
-    backgroundColor: "#ffe4e6",
     borderRadius: 12,
     padding: 16,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
+    shadowRadius: 1,
     elevation: 1,
   },
   scheduleItem: {
@@ -199,10 +167,8 @@ const styles = StyleSheet.create({
   scheduleTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#111827",
   },
   scheduleDate: {
     fontSize: 12,
-    color: "#6b7280",
   },
 });
