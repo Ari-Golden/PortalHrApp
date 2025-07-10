@@ -62,7 +62,7 @@ export default function Index() {
         <View
           style={[styles.scheduleBox, { backgroundColor: themeColors.card }]}
         >
-          <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
+          <Text style={[styles.sectionTitle, { color: themeColors.text}]}>
             Aktivitas Perusahaan
           </Text>
           <ScheduleItem
@@ -90,7 +90,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 30,
   },
   attendanceBox: {
     marginHorizontal: 16,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   scheduleBox: {
     marginTop: 24,
-    borderRadius: 12,
+    borderRadius: 2,
     padding: 16,
     shadowColor: "#000",
     shadowRadius: 1,
